@@ -1,4 +1,5 @@
 speedtest
+*.txt
 
 # Prerequisites
 *.d
