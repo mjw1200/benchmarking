@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <stdio.h> 
 
-#define DIVIDENDS 500
-#define DIVISORS 50
+#define DIVIDENDS 500000
+#define DIVISORS 50000
 #define THREADS 2
 
 double dividends[DIVIDENDS];
@@ -41,6 +41,9 @@ void prePopulate() {
     divisors[i] = getBigDouble();
 }
 
+//-------------------------------------------------------------------------------------------------
+// Divide as many big doubles as we can before we're told to stop
+//-------------------------------------------------------------------------------------------------
 void *thread(void *vargp) 
 {
   uint64_t counter = 0;
@@ -51,8 +54,8 @@ void *thread(void *vargp)
   while (stop == 0) {
     for (i = 0; i < DIVISORS; i++) {
       for (j = 0; j < DIVIDENDS; j++) {
+        // printf("%d\t%d\t%d\n", i, j, stop);
         result = dividends[j] / divisors[i];
-        // printf("%d\t%d\t%f\n", i, j, result);
         counter++;
 
         if (stop == 1)
@@ -62,8 +65,6 @@ void *thread(void *vargp)
       if (stop == 1)
         break;
     }
-
-    stop = 1;
   }
 
   printf("Did %llu divisions\n", counter);
@@ -71,35 +72,21 @@ void *thread(void *vargp)
   return NULL;
 } 
    
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// main
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 int main() {
   srand(getpid());
 
   prePopulate();
-  thread(NULL);
+
+  pthread_t thread_id1; 
+  pthread_create(&thread_id1, NULL, thread, NULL);
+  sleep(1);
+  stop = 1; 
+  pthread_join(thread_id1, NULL); 
 
   return 0;
-}
-
-int smain() { 
-  // srand(getpid());
-
-  // // printf("Pre-generating\n");
-  // for (int i = 0; i < A; i++) {
-  //   operand1[i] = rand() / (double)B; // arc4random() / (double)B;
-  //   operand2[i] = rand() / (double)B; // arc4random() / (double)B;
-  // }
-  // // printf("Here we go!!\n");
-
-  // // printf("Ready\n");
-  // // for (int i = A -1; i > A-50; i--)
-  // //   printf("  %f\n", operand1[i]);
-
-  // pthread_t thread_id1; 
-  // pthread_create(&thread_id1, NULL, thread, NULL);
-  // sleep(1);
-  // stop = 1; 
-  // // printf("Time!!\n");
-  // pthread_join(thread_id1, NULL); 
-
-  return(0); 
 }
