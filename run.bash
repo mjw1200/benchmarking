@@ -2,7 +2,7 @@
   
 i=0
 
-while [ $i -lt 50 ]
+while [ $i -lt 15 ]
 do
   ./speedtest
   let "i++"

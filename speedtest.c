@@ -18,9 +18,9 @@ int stop = 0;
 // Generate a large-ish, random-ish double value
 //-------------------------------------------------------------------------------------------------
 double getBigDouble() {
-  uint64_t rand1 = rand();
-  uint64_t rand2 = rand();
-  uint64_t bigRand = rand1 * rand2;
+  u_int64_t rand1 = rand();
+  u_int64_t rand2 = rand();
+  u_int64_t bigRand = rand1 * rand2;
   double bigDouble = bigRand / 1e6;
   
   return bigDouble;
@@ -46,7 +46,7 @@ void prePopulate() {
 //-------------------------------------------------------------------------------------------------
 void *thread(void *vargp) 
 {
-  uint64_t counter = 0;
+  u_int64_t counter = 0;
   double result = 0.0;
   int i = 0;
   int j = 0;
@@ -92,6 +92,8 @@ int main() {
   for (i = 0; i < THREADS; i++) {
     pthread_join(threadIDs[i], NULL); 
   }
+  
+  printf("\n");
 
   return 0;
 }
