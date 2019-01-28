@@ -3,9 +3,9 @@
 #include <unistd.h>
 #include <stdio.h> 
 
-#define DIVIDENDS 500000
-#define DIVISORS 50000
-#define THREADS 2
+#define DIVIDENDS 5000
+#define DIVISORS 500
+#define THREADS 4
 
 double dividends[DIVIDENDS];
 double divisors[DIVISORS];
@@ -78,15 +78,21 @@ void *thread(void *vargp)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 int main() {
-  srand(getpid());
+  int i = 0;
 
+  srand(getpid());
   prePopulate();
 
-  pthread_t thread_id1; 
-  pthread_create(&thread_id1, NULL, thread, NULL);
+  for (i = 0; i < THREADS; i++) {
+    pthread_create(&(threadIDs[i]), NULL, thread, NULL);
+  }
+
   sleep(1);
   stop = 1; 
-  pthread_join(thread_id1, NULL); 
+
+  for (i = 0; i < THREADS; i++) {
+    pthread_join(threadIDs[i], NULL); 
+  }
 
   return 0;
 }
