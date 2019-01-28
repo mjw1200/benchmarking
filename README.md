@@ -1,4 +1,4 @@
-#Speedtest
+# Speedtest
 
 This is a fun, interesting little project to measure the raw computing power of a machine. How
 many floating point divisions can the computer do if it's fully utilized? I don't think this is the
