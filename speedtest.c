@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <stdio.h> 
 
-#define DIVIDENDS 5000
-#define DIVISORS 500
+#define DIVIDENDS 50000
+#define DIVISORS 5000
 #define THREADS 4
 
 double dividends[DIVIDENDS];
@@ -32,11 +32,11 @@ double getBigDouble() {
 void prePopulate() {
   int i = 0;
 
-  printf("Generating dividends...\n");
+  // printf("Generating dividends...\n");
   for (i = 0; i < DIVIDENDS; i++)
     dividends[i] = getBigDouble();
 
-  printf("Generating divisors...\n");
+  // printf("Generating divisors...\n");
   for (i = 0; i < DIVISORS; i++)
     divisors[i] = getBigDouble();
 }
@@ -54,7 +54,6 @@ void *thread(void *vargp)
   while (stop == 0) {
     for (i = 0; i < DIVISORS; i++) {
       for (j = 0; j < DIVIDENDS; j++) {
-        // printf("%d\t%d\t%d\n", i, j, stop);
         result = dividends[j] / divisors[i];
         counter++;
 
@@ -67,7 +66,7 @@ void *thread(void *vargp)
     }
   }
 
-  printf("Did %llu divisions\n", counter);
+  printf("%llu\n", counter);
 
   return NULL;
 } 
